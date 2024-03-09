@@ -61,10 +61,16 @@ export class UserService {
     if (dto.password) {
       data = { ...dto, password: await hash(dto.password) };
     }
-    const profile = await this.prisma.user.update({ where: { id }, data });
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...rest } = profile;
-    return rest;
+    return await this.prisma.user.update({
+      where: { id },
+      data,
+      select: {
+        email: true,
+        name: true,
+        workInterval: true,
+        breakInterval: true,
+        intervalsCount: true,
+      },
+    });
   }
 }
