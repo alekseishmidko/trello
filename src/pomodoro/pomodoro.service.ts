@@ -13,7 +13,16 @@ export class PomodoroService {
       include: { rounds: { orderBy: { id: 'desc' } } },
     });
   }
-
+  async update(
+    dto: Partial<PomodoroSessionDto>,
+    pomodoroId: string,
+    userId: string,
+  ) {
+    return this.prisma.pomodoroSession.update({
+      where: { id: pomodoroId, userId },
+      data: dto,
+    });
+  }
   async create(userId: string) {
     const todaySession = await this.getTodaySession(userId);
     if (todaySession) return todaySession;
@@ -36,17 +45,6 @@ export class PomodoroService {
         user: { connect: { id: userId } },
       },
       include: { rounds: true },
-    });
-  }
-
-  async update(
-    dto: Partial<PomodoroSessionDto>,
-    pomodoroId: string,
-    userId: string,
-  ) {
-    return this.prisma.pomodoroSession.update({
-      where: { id: pomodoroId, userId },
-      data: dto,
     });
   }
 

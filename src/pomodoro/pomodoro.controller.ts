@@ -13,7 +13,7 @@ import {
 import { PomodoroService } from './pomodoro.service';
 import { CurrentUser } from 'src/auth/decorators/user.decorator';
 import { Auth } from 'src/auth/decorators/auth.decorator';
-import { PomodoroRoundDto } from './dto/pomodoro.dto';
+import { PomodoroRoundDto, PomodoroSessionDto } from './dto/pomodoro.dto';
 
 @Controller('user/timer')
 export class PomodoroController {
@@ -34,22 +34,22 @@ export class PomodoroController {
 
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
-  @Put('round/:id')
+  @Put(':id')
   @Auth()
-  async updateRound(@Body() dto: PomodoroRoundDto, @Param('id') id: string) {
-    return this.pomodoroService.updateRound(dto, id);
+  async update(
+    @Body() dto: PomodoroSessionDto,
+    @CurrentUser('id') userId: string,
+    @Param('id') id: string,
+  ) {
+    return this.pomodoroService.update(dto, id, userId);
   }
 
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
-  @Put(':id')
+  @Put('round/:id')
   @Auth()
-  async update(
-    @Body() dto: PomodoroRoundDto,
-    @CurrentUser('id') userId: string,
-    @Param('id') id: string,
-  ) {
-    return this.pomodoroService.update(dto, userId, id);
+  async updateRound(@Body() dto: PomodoroRoundDto, @Param('id') id: string) {
+    return this.pomodoroService.updateRound(dto, id);
   }
 
   @HttpCode(200)
