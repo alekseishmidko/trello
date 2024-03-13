@@ -4,6 +4,7 @@ import { IsEnum, IsOptional, IsString } from 'class-validator';
 
 export class TaskDto {
   @IsString()
+  @IsOptional()
   name: string;
 
   @IsOptional()
