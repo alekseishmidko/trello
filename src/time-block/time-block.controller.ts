@@ -16,7 +16,7 @@ import { Auth } from 'src/auth/decorators/auth.decorator';
 import { TimeBlockDto } from './dto/time-block.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 
-@Controller('time-block')
+@Controller('user/time-blocks')
 export class TimeBlockController {
   constructor(private readonly timeBlockService: TimeBlockService) {}
 

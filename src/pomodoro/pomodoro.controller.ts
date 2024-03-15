@@ -53,7 +53,7 @@ export class PomodoroController {
   }
 
   @HttpCode(200)
-  @Delete(' :id')
+  @Delete(':id')
   @Auth()
   async deleteSession(
     @Body() dto: PomodoroRoundDto,
